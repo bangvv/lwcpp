@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>C++ Cơ Bản</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+      color: #333;
+
+    }
+
+    header {
+      background: #005b99;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav {
+      background: #003f66;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      padding: 20px;
+      max-width: 960px;
+      margin: auto;
+      background: white;
+    }
+
+    h3 {
+      color: #005b99;
+    }
+
+    pre {
+      background: #eee;
+      padding: 10px;
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: Consolas, monospace;
+      background: #e0e0e0;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+
+    a {
+      color: #005b99;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .note {
+      font-style: italic;
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Học C++ từ Cơ Bản đến Nâng Cao</h1>
+    <p>Website tự học lập trình C++ miễn phí, thực chiến, dễ hiểu</p>
+  </header>
+
+  <nav>
+    <a href="cpp-bassic.html">C++ Cơ Bản</a>
+    <a href="cpp-advance.html">C++ Nâng Cao</a>
+    <a href="#stl">STL</a>
+    <a href="#build">Build System</a>
+    <a href="#du-an">Dự Án</a>
+  </nav>
+
+  <main>
+    <h2>C++ Cơ Bản</h2>
+
+    <h3 id="gioi-thieu">Giới thiệu về C++</h3>
+    <p>C++ là ngôn ngữ lập trình mạnh mẽ được phát triển từ ngôn ngữ C. Nó hỗ trợ lập trình hướng đối tượng, quản lý bộ
+      nhớ thủ công và hiệu suất cao. C++ được sử dụng rộng rãi trong các hệ thống lớn như game engine, trình biên dịch,
+      hệ
+      điều hành và phần mềm nhúng.</p>
+
+    <h3 id="hello-world">Hello World</h3>
+    <pre><code>#include &lt;iostream&gt;
+using namespace std;
+int main() {
+  cout &lt;&lt; "Hello, World!" &lt;&lt; endl;
+  return 0;
+}</code></pre>
+    <p class="note">#include &lt;iostream&gt; cho phép sử dụng cin và cout. using namespace std giúp không phải viết
+      std::cout mỗi lần.</p>
+
+    <h3 id="kieu-du-lieu">Biến và kiểu dữ liệu</h3>
+    <p>Các biến trong C++ được khai báo với kiểu dữ liệu cụ thể để xác định loại giá trị mà biến đó có thể chứa. Dưới
+      đây
+      là một số kiểu dữ liệu cơ bản:</p>
+    <ul>
+      <li><strong>int</strong>: Số nguyên có dấu (ví dụ: -10, 0, 42). Thường chiếm 4 byte và dùng cho các giá trị đếm
+        được. (size 4 byte)</li>
+      <li><strong>float</strong>: Số thực đơn chính xác, dùng khi không yêu cầu độ chính xác cao. Cần hậu tố
+        <code>f</code> (ví dụ: 3.14f). (size 4 byte)
+      </li>
+      <li><strong>double</strong>: Số thực có độ chính xác cao hơn float, thích hợp cho các phép tính khoa học. (size 8 byte)</li>
+      <li><strong>char</strong>: Ký tự đơn, đặt trong dấu nháy đơn (ví dụ: 'A'). (size 1 byte)</li>
+      <li><strong>bool</strong>: Biến logic có hai giá trị: <code>true</code> hoặc <code>false</code>. (size 1 byte)</li>
+      <li><strong>string</strong>: Chuỗi ký tự, là một lớp trong thư viện chuẩn STL. Cần
+        <code>#include &lt;string&gt;</code>.
+      </li>
+    </ul>
+    <pre><code>int age = 25;            // kiểu int, lưu tuổi
+float pi = 3.14f;       // float, cần hậu tố f để phân biệt với double
+double g = 9.80665;     // double, chính xác cao hơn float
+char grade = 'A';       // char, ký tự duy nhất
+bool passed = true;     // bool, true hoặc false
+string name = "Alice";   // string, chuỗi ký tự</code></pre>
+    <p class="note">Mỗi kiểu dữ liệu có kích thước bộ nhớ và mục đích sử dụng riêng. Nên chọn kiểu phù hợp để tiết kiệm
+      bộ
+      nhớ và tăng hiệu suất.</p>
+    <p class="note">Muốn sử dụng kiểu <code>string</code>, cần thêm <code>#include &lt;string&gt;</code> vào đầu file.
+    </p>
+
+    <h3 id="toan-tu">Toán tử</h3>
+    <p>C++ cung cấp nhiều loại toán tử để thực hiện các phép tính và thao tác logic:</p>
+    <ul>
+      <li><strong>Toán tử số học</strong>:<br>
+        <code>+</code> (cộng), <code>-</code> (trừ), <code>*</code> (nhân), <code>/</code> (chia), <code>%</code> (chia
+        lấy dư)<br>
+        <strong>Ví dụ:</strong> <code>5 % 2</code> sẽ trả về <code>1</code> vì 5 chia 2 dư 1.
+      </li>
+      <li><strong>Toán tử so sánh</strong>:<br>
+        <code>==</code> (bằng), <code>!=</code> (khác), <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>,
+        <code>&lt;=</code>
+      </li>
+      <li><strong>Toán tử logic</strong>:<br>
+        <code>&amp;&amp;</code> (và), <code>||</code> (hoặc), <code>!</code> (phủ định)
+      </li>
+      <li><strong>Toán tử gán</strong>:<br>
+        <code>=</code>, <code>+=</code>, <code>-=</code>, <code>*=</code>, <code>/=</code>
+      </li>
+      <li><strong>Toán tử bit</strong>:<br>
+        <code>&amp;</code>, <code>|</code>, <code>^</code> (XOR), <code>~</code> (NOT), <code>&lt;&lt;</code> (dịch
+        trái),
+        <code>&gt;&gt;</code> (dịch phải)
+      </li>
+    </ul>
+    <pre><code>int a = 5, b = 2;
+cout &lt;&lt; a + b &lt;&lt; endl;    // 7
+cout &lt;&lt; a - b &lt;&lt; endl;    // 3
+cout &lt;&lt; a * b &lt;&lt; endl;    // 10
+cout &lt;&lt; a / b &lt;&lt; endl;    // 2 (vì chia nguyên)
+cout &lt;&lt; a % b &lt;&lt; endl;    // 1 (dư)
+
+cout &lt;&lt; (a == b) &lt;&lt; endl; // 0 (false)
+cout &lt;&lt; (a &gt; b) &lt;&lt; endl;   // 1 (true)
+
+cout &lt;&lt; ((a &gt; 0) &amp;&amp; (b &gt; 0)) &lt;&lt; endl; // 1 (true)
+
+cout &lt;&lt; (a &amp; b) &lt;&lt; endl;   // bitwise AND: 5 &amp; 2 = 00000101 &amp; 00000010 = 00000000</code></pre>
+    <p class="note">Chú ý: <code>%</code> chỉ dùng cho số nguyên. Để lấy phần dư số thực, hãy dùng hàm
+      <code>fmod()</code>
+      từ thư viện &lt;cmath&gt;.
+    </p>
+    <p class="note">Phân biệt rõ giữa <code>&amp;&amp;</code> (AND logic) và <code>&amp;</code> (AND bit).</p>
+
+
+    <h3 id="dieu-kien">Câu lệnh điều kiện</h3>
+    <p>Trong C++, câu lệnh điều kiện được sử dụng để kiểm tra điều kiện và thực hiện các khối lệnh khác nhau dựa vào kết
+      quả đúng/sai.</p>
+    <h3>1. if - else if - else</h3>
+    <pre><code>int score = 75;
+if (score >= 90) {
+  cout << "Giỏi";
+} else if (score >= 70) {
+  cout << "Khá";
+} else {
+  cout << "Yếu";
+}</code></pre>
+    <p class="note">Câu lệnh được kiểm tra lần lượt từ trên xuống. Điều kiện đầu tiên đúng thì các phần sau sẽ không
+      được
+      kiểm tra nữa.</p>
+
+    <h3>2. switch-case</h3>
+    <p>Dùng khi có nhiều giá trị rẽ nhánh rõ ràng, ví dụ theo số hoặc ký tự cụ thể:</p>
+    <pre><code>char grade = 'B';
+switch (grade) {
+  case 'A':
+    cout << "Tuyệt vời";
+    break;
+  case 'B':
+    cout << "Tốt";
+    break;
+  case 'C':
+    cout << "Trung bình";
+    break;
+  default:
+    cout << "Chưa đạt";
+}</code></pre>
+    <p class="note">Mỗi <code>case</code> nên kết thúc bằng <code>break</code> để tránh rơi qua các nhánh sau.
+      <code>default</code> là mặc định nếu không khớp case nào.
+    </p>
+
+    <h3>3. Toán tử ba ngôi (Ternary Operator)</h3>
+    <p>Dùng để viết ngắn gọn điều kiện if-else:</p>
+    <pre><code>int score = 85;
+string result = (score >= 60) ? "Đậu" : "Rớt";
+cout << result;</code></pre>
+    <p class="note">Toán tử ba ngôi có dạng: <code>điều_kiện ? giá_trị_nếu_đúng : giá_trị_nếu_sai</code>.</p>
+
+    <h3>4. if constexpr (từ C++17)</h3>
+    <p>Dùng trong template để kiểm tra điều kiện ngay tại thời điểm biên dịch (compile-time):</p>
+    <pre><code>#include <type_traits>
+
+template <typename T>
+void print_type() {
+  if constexpr (std::is_integral<T>::value)
+    cout << "Số nguyên";
+  else
+    cout << "Không phải số nguyên";
+}</code></pre>
+    <p class="note">Giúp loại bỏ nhánh sai hoàn toàn khi biên dịch, tối ưu hiệu năng.</p>
+
+    <h3>5. goto (không khuyến khích)</h3>
+    <p>Cho phép nhảy đến một nhãn cụ thể trong mã. Dễ gây khó đọc và khó debug.</p>
+    <pre><code>int x = 5;
+if (x < 0) goto negative;
+cout << "Số dương";
+return;
+
+negative:
+cout << "Số âm";</code></pre>
+    <p class="note">Chỉ nên dùng trong những trường hợp rất đặc biệt như thoát lồng nhiều vòng lặp phức tạp.</p>
+
+    <h3 id="vong-lap">Vòng lặp</h3>
+    <p>Vòng lặp giúp lặp đi lặp lại một khối lệnh nhiều lần trong khi điều kiện còn đúng. Có ba loại vòng lặp chính:</p>
+    <h3>1. for</h3>
+    <pre><code>for (int i = 1; i <= 5; i++) {
+  cout << i << " ";
+}</code></pre>
+    <p class="note">Thích hợp khi biết trước số lần lặp.</p>
+
+    <h3>2. while</h3>
+    <pre><code>int n = 5;
+while (n > 0) {
+  cout << n-- << " ";
+}</code></pre>
+    <p class="note">Lặp khi điều kiện còn đúng. Điều kiện được kiểm tra trước mỗi vòng.</p>
+
+    <h3>3. do-while</h3>
+    <pre><code>int x = 0;
+do {
+  cout << x++ << " ";
+} while (x < 3);</code></pre>
+    <p class="note">Khối lệnh được thực hiện ít nhất một lần trước khi kiểm tra điều kiện.</p>
+
+    <h3>4. break và continue</h3>
+    <pre><code>for (int i = 1; i <= 10; i++) {
+  if (i == 5) continue; // bỏ qua giá trị 5
+  if (i == 8) break;    // dừng vòng lặp tại 8
+  cout << i << " ";
+}</code></pre>
+    <ul>
+      <li><code>break</code>: thoát khỏi vòng lặp ngay lập tức.</li>
+      <li><code>continue</code>: bỏ qua phần còn lại của vòng lặp hiện tại và sang vòng tiếp theo.</li>
+    </ul>
+
+    <h3>5. Biến phạm vi vòng lặp (C++11+)</h3>
+    <pre><code>vector<int> nums = {1, 2, 3};
+for (int x : nums) {
+  cout << x << " ";
+}</code></pre>
+    <p class="note">C++11 hỗ trợ vòng lặp <code>range-based for</code> (còn gọi là foreach) để duyệt qua container như
+      mảng, vector, set... Đây là cách viết ngắn gọn, an toàn và dễ đọc hơn.</p>
+    <p class="note">Bạn cũng có thể dùng tham chiếu để tránh copy giá trị:</p>
+    <pre><code>for (int& x : nums) x *= 2;</code></pre>
+    <p class="note">Hoặc nếu không cần chỉnh sửa, dùng <code>const</code> để đảm bảo an toàn:</p>
+    <pre><code>for (const int& x : nums) cout << x;</code></pre>
+
+    <h3 id="ham-va-tham-so">Hàm và tham số</h3>
+    <p>Hàm trong C++ giúp chia nhỏ chương trình thành các phần logic dễ quản lý, tái sử dụng và kiểm thử.</p>
+
+    <h3>1. Khai báo và định nghĩa hàm</h3>
+    <pre><code>// Khai báo (có thể đặt ở đầu file)
+int cong(int a, int b);
+
+// Định nghĩa (chi tiết hàm)
+int cong(int a, int b) {
+  return a + b;
+}</code></pre>
+    <p class="note">Cần khai báo trước nếu hàm được định nghĩa sau hàm <code>main()</code>.</p>
+
+    <h3>2. Gọi hàm</h3>
+    <pre><code>int kq = cong(3, 4); // kết quả: 7
+cout << kq;</code></pre>
+    <p class="note">Gọi hàm bằng cách truyền giá trị hoặc biến tương ứng với tham số.</p>
+
+    <h3>3. Hàm không có giá trị trả về (void)</h3>
+    <pre><code>void xinChao() {
+  cout << "Xin chào C++";
+}</code></pre>
+
+    <h3>4. Hàm không có tham số</h3>
+    <pre><code>int layGiaTriCoDinh() {
+  return 42;
+}</code></pre>
+
+    <h3>5. Tham số mặc định</h3>
+    <pre><code>void say(string name = "bạn") {
+  cout << "Xin chào, " << name;
+}</code></pre>
+    <p class="note">Nếu không truyền đối số, giá trị mặc định sẽ được dùng.</p>
+
+    <h3>6. Truyền tham trị vs tham chiếu</h3>
+    <pre><code>void tang1(int x) { x++; }         // truyền giá trị, không ảnh hưởng bên ngoài
+void tang2(int& x) { x++; }       // truyền tham chiếu, ảnh hưởng biến gốc</code></pre>
+
+    <h3>7. Đệ quy</h3>
+    <pre><code>int giaiThua(int n) {
+  if (n <= 1) return 1;
+  return n * giaiThua(n - 1);
+}</code></pre>
+    <p class="note">Hàm gọi lại chính nó. Cần có điều kiện dừng để tránh lặp vô hạn.</p>
+
+    <h3>8. Biến trong hàm</h3>
+    <ul>
+      <li><strong>Biến cục bộ</strong>: chỉ tồn tại trong hàm.</li>
+      <li><strong>static</strong>: giữ giá trị giữa các lần gọi hàm.</li>
+    </ul>
+    <pre><code>void demSoLanGoi() {
+  static int dem = 0;
+  dem++;
+  cout << "Gọi lần thứ: " << dem;
+}</code></pre>
+
+    <p class="note">Các biến khai báo trong hàm sẽ được cấp phát bộ nhớ mỗi lần gọi (trừ biến <code>static</code>).</p>
+
+    <h3 id="con-tro-va-tham-chieu">Con trỏ và Tham chiếu</h3>
+    <ol>
+      <li>Biến con trỏ là gì?</li>
+      <li>Con trỏ (Pointer)</li>
+      <li>Cấp phát bộ nhớ động</li>
+      <li>Mảng động</li>
+      <li>Tham chiếu (Reference)</li>
+      <li>So sánh con trỏ và tham chiếu</li>
+      <li>Con trỏ kết hợp const</li>
+      <li>Con trỏ cấp 2, cấp 3</li>
+      <li>Truyền con trỏ cho hàm</li>
+      <li>Con trỏ void (void*)</li>
+      <li>Con trỏ hàm (function pointer)</li>
+      <li>Null pointer và nullptr</li>
+    </ol>
+    <h3>0. Biến con trỏ là gì?</h3>
+    <p>Con trỏ là một biến lưu địa chỉ của một biến khác. Con trỏ có thể trỏ tới bất kỳ kiểu dữ liệu nào: int, float,
+      struct...</p>
+    <h3>1. Con trỏ (Pointer)</h3>
+    <p>Con trỏ là biến lưu địa chỉ của biến khác.</p>
+    <pre><code>int a = 10;
+int* p = &a;       // p lưu địa chỉ của a
+cout << *p;        // *p là giá trị tại địa chỉ đó => 10</code></pre>
+    <p class="note">Toán tử <code>&</code> lấy địa chỉ, <code>*</code> truy cập giá trị qua địa chỉ (dereference).</p>
+
+    <h3>2. Cấp phát bộ nhớ động</h3>
+    <pre><code>int* ptr = new int(5); // cấp phát vùng nhớ mới lưu giá trị 5
+cout << *ptr;
+delete ptr;           // giải phóng vùng nhớ</code></pre>
+    <p class="note">Luôn dùng <code>delete</code> sau khi <code>new</code> để tránh rò rỉ bộ nhớ.</p>
+
+    <h3>3. Mảng động</h3>
+    <pre><code>int* arr = new int[3]{1, 2, 3};
+for (int i = 0; i < 3; i++) cout << arr[i];
+delete[] arr;</code></pre>
+    <p class="note">Dùng <code>delete[]</code> cho mảng cấp phát động.</p>
+
+    <h3>4. Tham chiếu (Reference)</h3>
+    <pre><code>int x = 5;
+int& ref = x;   // ref là tên khác của x
+ref = 10;
+cout << x;      // in ra 10</code></pre>
+    <p class="note">Tham chiếu là alias (bí danh), không cấp phát bộ nhớ mới.</p>
+
+    <h3>5. So sánh con trỏ và tham chiếu</h3>
+    <ul>
+      <li>Con trỏ có thể <code>null</code>, tham chiếu thì không.</li>
+      <li>Con trỏ có thể thay đổi địa chỉ trỏ tới, tham chiếu thì cố định sau khi gán.</li>
+      <li>Con trỏ có thể trỏ tới <code>const</code> để bảo vệ dữ liệu, ví dụ: <code>const int* p</code> (không cho thay
+        đổi giá trị).</li>
+    </ul>
+
+    <h3>6. Con trỏ kết hợp const</h3>
+    <pre><code>int x = 10;
+const int* p1 = &x;   // Không cho thay đổi *p1, nhưng p1 có thể trỏ nơi khác
+int* const p2 = &x;    // Cho thay đổi *p2, nhưng không đổi địa chỉ p2
+const int* const p3 = &x; // Không cho thay đổi *p3 và không đổi địa chỉ</code></pre>
+    <p class="note">Ghi nhớ nguyên tắc đọc từ phải sang trái: const áp dụng cho bên trái của dấu *</p>
+
+    <h3>7. Con trỏ cấp 2, cấp 3</h3>$1</p>
+
+    <h3>8. Truyền con trỏ cho hàm</h3>
+    <pre><code>void tang(int* p) {
+  (*p)++;
+}
+
+int x = 5;
+tang(&x);
+cout << x; // 6</code></pre>
+    <p class="note">Con trỏ cho phép thay đổi giá trị gốc từ trong hàm.</p>
+
+    <h3>9. Con trỏ void (void*)</h3>
+    <pre><code>void* p;
+int a = 10;
+p = &a;
+cout << *(int*)p;</code></pre>
+    <p class="note">Con trỏ void có thể trỏ đến bất kỳ kiểu nào, nhưng cần ép kiểu trước khi dùng.</p>
+
+    <h3>10. Con trỏ hàm (function pointer)</h3>
+    <pre><code>int cong(int a, int b) { return a + b; }
+int (*f)(int, int) = cong;
+cout << f(3, 4); // 7</code></pre>
+    <p class="note">Hữu ích khi truyền hàm như tham số.</p>
+
+    <h3>11. Null pointer và nullptr</h3>
+    <pre><code>int* p = nullptr;
+if (p == nullptr) cout << "Chưa cấp phát";</code></pre>
+    <p class="note">Từ C++11 dùng <code>nullptr</code> thay cho <code>NULL</code> hoặc <code>0</code>.</p>
+
+    <h3 id="struct-va-kieu-tu-dinh-nghia">Kiểu dữ liệu tự định nghĩa (struct)</h3>
+    <p><code>struct</code> cho phép nhóm nhiều biến (có thể khác kiểu) vào cùng một kiểu dữ liệu mới. Hữu ích để mô tả
+      các
+      thực thể như Sinh viên, Học sinh, Sản phẩm...</p>
+
+    <h3>1. Khai báo và sử dụng struct</h3>
+    <pre><code>struct SinhVien {
+  string ten;
+  int tuoi;
+  float diem;
+};
+
+int main() {
+  SinhVien sv1;
+  sv1.ten = "Nam";
+  sv1.tuoi = 20;
+  sv1.diem = 8.5;
+  cout << sv1.ten;
+}</code></pre>
+    <p class="note">Sau khi định nghĩa, bạn có thể khai báo biến kiểu đó như một kiểu dữ liệu thông thường.</p>
+
+    <h3>2. Khởi tạo nhanh (C++11+)</h3>
+    <pre><code>SinhVien sv2 = {"Lan", 21, 9.0};</code></pre>
+    <p class="note">Cách này giúp tạo biến và gán giá trị ngay lập tức theo thứ tự khai báo.</p>
+
+    <h3>3. Truyền struct cho hàm</h3>
+    <pre><code>void inThongTin(SinhVien sv) {
+  cout << sv.ten << " - " << sv.tuoi << endl;
+}</code></pre>
+    <p class="note">Nên truyền tham chiếu nếu struct lớn để tránh sao chép:</p>
+    <pre><code>void inThongTin(const SinhVien& sv);</code></pre>
+
+    <h3>4. struct lồng nhau</h3>
+    <pre><code>struct Ngay {
+  int ngay, thang, nam;
+};
+
+struct HocSinh {
+  string ten;
+  Ngay ngaySinh;
+};
+
+HocSinh hs = {"Mai", {1, 1, 2005}};</code></pre>
+    <p class="note">Có thể lồng struct trong struct để tổ chức dữ liệu rõ ràng hơn.</p>
+
+    <h3>5. struct có hàm thành viên</h3>
+    <pre><code>struct HinhChuNhat {
+  int dai, rong;
+  int dienTich() {
+    return dai * rong;
+  }
+};
+
+HinhChuNhat hcn = {5, 3};
+cout << hcn.dienTich();</code></pre>
+    <p class="note">struct hoàn toàn có thể có hàm thành viên giống như class.</p>
+
+    <h3>6. Các mức truy cập trong struct</h3>
+    <pre><code>struct A {
+public:
+  int x;
+private:
+  int y;
+};</code></pre>
+    <p class="note">struct mặc định là public, nhưng có thể khai báo các phần private, protected như class.</p>
+
+    <h3>7. struct và cấp phát động</h3>
+    <pre><code>struct HocSinh {
+  string ten;
+  int tuoi;
+};
+
+HocSinh* hs = new HocSinh;
+hs->ten = "Nam";
+hs->tuoi = 20;
+delete hs;</code></pre>
+    <p class="note">Có thể cấp phát struct động bằng <code>new</code> như con trỏ bình thường.</p>
+
+    <h3>8. struct và con trỏ thành viên</h3>
+    <pre><code>struct Node {
+  int data;
+  Node* next;
+};</code></pre>
+    <p class="note">struct có thể chứa con trỏ trỏ tới chính kiểu của nó. Dùng trong danh sách liên kết, cây nhị phân,
+      v.v.</p>
+
+    <h3>9. struct và constructor (C++11+)</h3>
+    <pre><code>struct Diem {
+  int x, y;
+  Diem(int a, int b) : x(a), y(b) {}
+};
+Diem d(3, 4);</code></pre>
+    <p class="note">struct có thể có constructor như class.</p>
+
+    <h3>10. So sánh struct với class</h3>
+    <ul>
+      <li><code>struct</code> mặc định là <code>public</code>, còn <code>class</code> mặc định là <code>private</code>.
+      </li>
+      <li>Cả hai đều hỗ trợ tính kế thừa, đóng gói và đa hình.</li>
+      <li>Có thể dùng <code>friend</code>, <code>virtual</code>, v.v. trong struct như trong class.</li>
+    </ul>
+
+    <h3>11. Kích thước bộ nhớ</h3>
+    <pre><code>struct A {
+  char c;
+  int i;
+};
+cout << sizeof(A);</code></pre>
+    <p class="note">Kích thước struct phụ thuộc thứ tự các thành viên, do có thể có padding (đệm) để tối ưu truy cập bộ
+      nhớ.</p>
+
+    <h3>12. Tổng kết</h3>
+    <ul>
+      <li><code>struct</code> nên dùng khi dữ liệu chủ yếu là public và đơn giản.</li>
+      <li>Dễ dàng mở rộng lên class khi cần tính kế thừa hoặc private mạnh mẽ.</li>
+    </ul>
+
+    <h3>enum</h3>
+    <pre><code>enum TrangThai { DUNG, CHAY, TAM_DUNG };
+TrangThai st = CHAY;</code></pre>
+    <p class="note">enum giúp đặt tên cho các hằng số nguyên để dễ đọc.</p>
+
+    <h3>typedef / using</h3>
+    <pre><code>typedef unsigned int uint;
+using uint = unsigned int;</code></pre>
+    <p class="note">Giúp đặt tên ngắn gọn cho kiểu dữ liệu.</p>
+
+    <h3 id="hang-so">Hằng số</h3>
+    <pre><code>const int SIZE = 100;
+constexpr double PI = 3.1415;
+#define MAX 50</code></pre>
+
+    <h3 id="nhap-xuat">Nhập xuất dữ liệu</h3>
+    <pre><code>int a;
+cin &gt;&gt; a;
+cout &lt;&lt; "a = " &lt;&lt; a;
+
+char name[20];
+scanf("%s", name);
+printf("Ten: %s", name);</code></pre>
+
+    <h3 id="chuoi">Xử lý chuỗi</h3>
+    <pre><code>string s1 = "Hello", s2 = "World";
+string s3 = s1 + " " + s2;
+cout &lt;&lt; s3 &lt;&lt; endl;
+cout &lt;&lt; s3.substr(0, 5); // Hello</code></pre>
+
+    <h3 id="comment">Comment và include</h3>
+    <pre><code>// Đây là comment dòng đơn
+      
+/* Đây là comment nhiều dòng */
+#include &lt;iostream&gt;
+#pragma once</code></pre>
+
+
+    <h3 id="bo-nho">Các vùng bộ nhớ trong C++</h3>
+    <p>Trong C++, khi một chương trình chạy, bộ nhớ của nó được chia thành nhiều vùng chính:</p>
+    <ul>
+      <li><strong>Text (Code Segment):</strong> chứa mã máy của chương trình.</li>
+      <li><strong>Global/Static:</strong> chứa biến toàn cục, biến static có thời gian sống dài.</li>
+      <li><strong>Heap (Free Store):</strong> nơi cấp phát bộ nhớ động bằng <code>new</code> / <code>malloc</code>, phải
+        <code>delete</code> / <code>free</code>.
+      </li>
+      <li><strong>Stack:</strong> chứa các biến cục bộ, tham số hàm, và được quản lý tự động (LIFO).</li>
+      <li><strong>Literal/Constant Pool:</strong> lưu trữ hằng số như chuỗi ký tự trong chương trình.</li>
+    </ul>
+    <p class="note">Hiểu rõ cách tổ chức bộ nhớ giúp bạn tránh các lỗi như tràn stack, rò rỉ bộ nhớ, hoặc dùng con trỏ
+      không hợp lệ.</p>
+
+    <h3 id="bien-dich">Các bước biên dịch một chương trình C++</h3>
+    <p>Trước khi chạy chương trình, mã C++ phải trải qua các bước sau:</p>
+    <ol>
+      <li><strong>Tiền xử lý (Preprocessing):</strong> xử lý các dòng bắt đầu bằng <code>#</code> như
+        <code>#include</code>, <code>#define</code>.
+      </li>
+      <li><strong>Biên dịch (Compilation):</strong> chuyển mã nguồn (.cpp) thành mã máy (object code, .o/.obj).</li>
+      <li><strong>Liên kết (Linking):</strong> kết hợp nhiều file object và thư viện thành file thực thi (.exe).</li>
+      <li><strong>Chạy (Execution):</strong> hệ điều hành nạp file thực thi vào bộ nhớ và chạy.</li>
+    </ol>
+    <p class="note">Công cụ như <code>g++</code> tự động thực hiện các bước trên. Bạn có thể chỉ dừng ở từng bước bằng
+      các
+      flag như <code>-E</code>, <code>-c</code>, <code>-o</code>.</p>
+
+
+    <h3 id="loi">Các lỗi thường gặp</h3>
+    <ul>
+      <li>Dùng biến chưa khởi tạo (undefined behavior)</li>
+      <li>Truy cập vùng nhớ đã bị giải phóng (dangling pointer)</li>
+      <li>Gọi hàm chưa định nghĩa hoặc thiếu prototype</li>
+      <li>Truy cập ngoài chỉ số mảng (array out of bounds)</li>
+      <li>Dùng sai kiểu dữ liệu (ví dụ: gán float cho int)</li>
+      <li>Không giải phóng bộ nhớ sau khi dùng <code>new</code> (memory leak)</li>
+      <li>Tham chiếu null hoặc sử dụng <code>nullptr</code> sai cách</li>
+      <li>Dùng <code>==</code> thay vì <code>=</code> trong biểu thức gán</li>
+      <li>Sai phạm vi biến: biến cục bộ bị che khuất hoặc biến toàn cục bị ghi đè</li>
+      <li>Nhập dữ liệu bằng <code>cin</code> không kiểm tra lỗi nhập (cin.fail())</li>
+    </ul>
+
+    <h3 id="debug">Debug cơ bản</h3>
+    <pre><code>cout &lt;&lt; "x = " &lt;&lt; x &lt;&lt; endl;
+
+// Biên dịch với flag -g để dùng GDB
+// g++ -g main.cpp -o main
+// gdb ./main</code></pre>
+
+    <p><a href="index.html">← Quay lại Trang chính</a></p>
+  </main>
+</body>
+
+</html>

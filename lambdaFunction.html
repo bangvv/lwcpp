@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chi Tiết OOP trong C++</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+      color: #333;
+
+    }
+
+    header {
+      background: #005b99;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav {
+      background: #003f66;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      padding: 20px;
+      max-width: 960px;
+      margin: auto;
+      background: white;
+    }
+
+    h4 {
+      color: #005b99;
+    }
+
+    pre {
+      background: #eee;
+      padding: 10px;
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: Consolas, monospace;
+      background: #e0e0e0;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+
+    a {
+      color: #005b99;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .note {
+      font-style: italic;
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Học C++ từ Cơ Bản đến Nâng Cao</h1>
+    <p>Website tự học lập trình C++ miễn phí, thực chiến, dễ hiểu</p>
+  </header>
+
+  <nav>
+    <a href="cpp-bassic.html">C++ Cơ Bản</a>
+    <a href="cpp-advance.html">C++ Nâng Cao</a>
+    <a href="#stl">STL</a>
+    <a href="#build">Build System</a>
+    <a href="#du-an">Dự Án</a>
+  </nav>
+
+  <main>
+
+    <section id="lambda">
+      <h2>Lambda & Function Object</h2>
+
+      <h3 id="Lambda">1. Lambda Expression</h3>
+      <p>Lambda là hàm ẩn danh (anonymous function), thường dùng để truyền logic nhanh gọn vào hàm khác.</p>
+      <pre>
+      <code>
+auto add = [](int a, int b) { return a + b; };
+std::cout << add(2, 3); // 5
+  </code></pre>
+
+      <h4>Capture by Value vs Reference</h4>
+      <p>Lambda có thể "nhớ" biến bên ngoài thông qua capture list.</p>
+      <pre>
+      <code>int x = 5;
+auto f1 = [x]() { std::cout << x; };   // capture by value
+auto f2 = [&x]() { std::cout << x; };  // capture by reference
+  </code>
+
+      <h4>mutable lambda</h4>
+      <p>Dùng khi muốn sửa giá trị copy của biến captured by value.</p>
+      <code></pre>
+int x = 10;
+auto f = [x]() mutable { x += 5; std::cout << x; }; // prints 15
+  </code>
+
+      <div class="note">
+        📌 <strong>Lưu ý:</strong> Lambda thường dùng cho logic ngắn, không nên lạm dụng nếu logic dài hoặc cần tái sử
+        dụng.
+      </div>
+
+      <h3 id="Object">2. Function Object (Functor)</h3>
+      <p>Là một class có <code>operator()</code>, giúp truyền hành vi linh hoạt và lưu được trạng thái.</p>
+      <pre>
+      <code>struct Adder {
+  int base;
+  Adder(int b) : base(b) {}
+  int operator()(int x) { return base + x; }
+};
+
+Adder add5(5);
+std::cout << add5(3); // 8
+  </code></pre>
+
+      <div class="note">
+        ✅ Dùng functor khi cần lưu trạng thái, hoặc truyền hành vi cho template/generic code.
+      </div>
+
+      <h3 id="std-function">3. std::function</h3>
+      <p><code>std::function&lt;R(Args...)&gt;</code> là wrapper chứa lambda, functor, hoặc function pointer.</p>
+      <pre><code>#include &lt;functional&gt;
+
+std::function&lt;int(int, int)&gt; f;
+
+f = [](int a, int b) { return a + b; };
+f = std::plus&lt;int&gt;(); // functor
+
+int add(int a, int b) { return a + b; }
+f = add; // function pointer
+  </code></pre>
+
+      <div class="note">
+        🔸 <strong>Ưu điểm:</strong> linh hoạt, gói được bất kỳ callable.
+        <br>
+        ⚠️ <strong>Nhược điểm:</strong> chậm hơn gọi trực tiếp (do type-erasure).
+      </div>
+
+      <h3 id="std-bind">4. std::bind</h3>
+      <p><code>std::bind</code> tạo callable mới từ hàm gốc, có thể fix trước 1 số đối số.</p>
+      <pre><code>#include &lt;functional&gt;
+
+int add(int a, int b) { return a + b; }
+auto add5 = std::bind(add, 5, std::placeholders::_1);
+std::cout << add5(3); // 8
+  </code></pre>
+
+      <div class="note">
+        ⚠️ <strong>Lưu ý:</strong> Với C++11 trở lên, lambda thường dễ đọc và thay thế std::bind trong nhiều trường hợp.
+      </div>
+    </section>
+
+
+    <p><a href="cpp-advance.html">← Quay lại C++ Nâng Cao</a></p>
+  </main>
+</body>
+
+</html>

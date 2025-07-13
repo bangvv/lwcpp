@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chi Tiết OOP trong C++</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+      color: #333;
+
+    }
+
+    header {
+      background: #005b99;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav {
+      background: #003f66;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      padding: 20px;
+      max-width: 960px;
+      margin: auto;
+      background: white;
+    }
+
+    h4 {
+      color: #005b99;
+    }
+
+    pre {
+      background: #eee;
+      padding: 10px;
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: Consolas, monospace;
+      background: #e0e0e0;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+
+    a {
+      color: #005b99;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .note {
+      font-style: italic;
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Học C++ từ Cơ Bản đến Nâng Cao</h1>
+    <p>Website tự học lập trình C++ miễn phí, thực chiến, dễ hiểu</p>
+  </header>
+
+  <nav>
+    <a href="cpp-bassic.html">C++ Cơ Bản</a>
+    <a href="cpp-advance.html">C++ Nâng Cao</a>
+    <a href="#stl">STL</a>
+    <a href="#build">Build System</a>
+    <a href="#du-an">Dự Án</a>
+  </nav>
+
+  <main>
+
+    <section id="memory">
+      <h2>Quản lý bộ nhớ nâng cao</h2>
+      <section id="SmartPointer">
+        <h3>1. Smart Pointer</h3>
+        <ul>
+          <li><code>std::unique_ptr</code>: sở hữu đơn, không thể sao chép.</li>
+          <li><code>std::shared_ptr</code>: đếm tham chiếu, nhiều đối tượng cùng sở hữu.</li>
+          <li><code>std::weak_ptr</code>: tránh vòng lặp sở hữu với shared_ptr.</li>
+        </ul>
+        <pre><code>
+#include <memory>
+std::unique_ptr<int> up = std::make_unique<int>(10);
+std::shared_ptr<int> sp1 = std::make_shared<int>(20);
+std::shared_ptr<int> sp2 = sp1;
+std::weak_ptr<int> wp = sp1;
+    </code></pre>
+        <div class="note">
+          <strong>Ưu điểm:</strong>
+          <ul>
+            <li>Tự động giải phóng bộ nhớ giúp tránh memory leak.</li>
+            <li>Dễ quản lý và an toàn hơn new/delete thủ công.</li>
+          </ul>
+          <strong>Nhược điểm:</strong>
+          <ul>
+            <li>Dễ gây lỗi nếu dùng sai kiểu (ví dụ dùng shared_ptr không cần thiết).</li>
+            <li>Có chi phí hiệu năng (đặc biệt với shared_ptr vì quản lý ref-count).</li>
+          </ul>
+          <strong>Khi nào nên dùng:</strong>
+          <ul>
+            <li>Dùng <code>unique_ptr</code>khi bạn chắc chắn chỉ cần một owner.</li>
+            <li>Dùng <code>shared_ptr</code> khi cần chia sẻ ownership giữa nhiều phần của chương trình.</li>
+            <li>Dùng <code>weak_ptr</code> để tránh vòng lặp tham chiếu giữa các shared_ptr.</li>
+          </ul>
+        </div>
+      </section>
+      <section id="raii">
+        <h3>2. RAII – Resource Acquisition Is Initialization</h3>
+        <p>RAII là kỹ thuật đảm bảo tài nguyên (file, memory...) được cấp phát và thu hồi đúng cách bằng cách gắn với
+          vòng đời object.</p>
+        <pre><code>
+class FileWrapper {
+    FILE* f;
+public:
+    FileWrapper(const char* name) { f = fopen(name, "r"); }
+    ~FileWrapper() { if (f) fclose(f); }
+};
+    </code></pre>
+        <div class="note">
+          🔒 <strong>Lưu ý:</strong> RAII đặc biệt quan trọng trong C++ vì không có GC như Java. Nên dùng RAII cho mọi
+          tài nguyên như file, lock, socket...
+        </div>
+      </section>
+      <section id="LeakDetector">
+        <h3>3. Leak Detector</h3>
+        <ul>
+          <li><strong>Valgrind</strong>: công cụ phân tích runtime chạy trên Linux. Nó giám sát chương trình trong quá
+            trình thực thi để:
+            <ul>
+              <li>Phát hiện bộ nhớ cấp phát mà không giải phóng (memory leak).</li>
+              <li>Truy cập ngoài vùng nhớ hợp lệ (invalid read/write).</li>
+              <li>Sử dụng vùng nhớ đã giải phóng (use-after-free).</li>
+            </ul>
+          </li>
+          <li><strong>AddressSanitizer (ASan)</strong>: trình phân tích thời gian chạy được tích hợp trong compiler như
+            GCC/Clang.
+            <ul>
+              <li>Phát hiện lỗi tràn bộ đệm (buffer overflow), lỗi truy cập use-after-free.</li>
+              <li>Nhanh hơn Valgrind, phù hợp tích hợp vào CI/CD hoặc debug local nhanh.</li>
+              <li>Không cần cài thêm tool ngoài, chỉ cần biên dịch lại với flag <code>-fsanitize=address</code>.</li>
+            </ul>
+          </li>
+        </ul>
+        <pre><code>
+// Dùng với gcc/clang
+$ g++ -fsanitize=address -g main.cpp -o app
+$ ./app
+    </code></pre>
+        <div class="note">
+          📌 <strong>Lưu ý:</strong> Trong dự án lớn, bạn nên chạy Valgrind hoặc ASan định kỳ trong CI/CD để phát hiện
+          sớm lỗi bộ nhớ khó debug.
+        </div>
+      </section>
+
+      <p><a href="cpp-advance.html">← Quay lại C++ Nâng Cao</a></p>
+  </main>
+</body>
+
+</html>

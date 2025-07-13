@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chi Tiết OOP trong C++</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+      color: #333;
+
+    }
+
+    header {
+      background: #005b99;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav {
+      background: #003f66;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      padding: 20px;
+      max-width: 960px;
+      margin: auto;
+      background: white;
+    }
+
+    h4 {
+      color: #005b99;
+    }
+
+    pre {
+      background: #eee;
+      padding: 10px;
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: Consolas, monospace;
+      background: #e0e0e0;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+
+    a {
+      color: #005b99;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .note {
+      font-style: italic;
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Học C++ từ Cơ Bản đến Nâng Cao</h1>
+    <p>Website tự học lập trình C++ miễn phí, thực chiến, dễ hiểu</p>
+  </header>
+
+  <nav>
+    <a href="cpp-bassic.html">C++ Cơ Bản</a>
+    <a href="cpp-advance.html">C++ Nâng Cao</a>
+    <a href="#stl">STL</a>
+    <a href="#build">Build System</a>
+    <a href="#du-an">Dự Án</a>
+  </nav>
+
+  <main>
+
+<section>
+    <h2>Modern C++ Features</h2>
+    <p>Những tính năng nổi bật từ C++11 đến C++20</p>
+    <h3 id="11">1. C++11</h3>
+    <ul>
+      <li><strong>auto, decltype:</strong> Suy luận kiểu tự động, giảm lặp lại.</li>
+      <li><strong>range-based for loop:</strong> Duyệt container đơn giản hơn.</li>
+      <li><strong>nullptr:</strong> Thay NULL, tránh lỗi ngầm do so sánh với int.</li>
+      <li><strong>Lambda expressions:</strong> Hàm ẩn danh, dùng cho callback/STL.</li>
+      <li><strong>Smart pointers:</strong> <code>unique_ptr</code>, <code>shared_ptr</code>, <code>weak_ptr</code>.</li>
+      <li><strong>Move semantics & rvalue reference:</strong> Tối ưu hiệu năng bằng cách tránh copy không cần thiết.</li>
+      <li><strong>std::thread, std::mutex:</strong> API đa luồng chuẩn.</li>
+      <li><strong>enum class:</strong> Enum an toàn kiểu, không trùng tên toàn cục.</li>
+    </ul>
+    <div class="note">
+      📌 <strong>Lưu ý:</strong> Tránh lạm dụng <code>auto</code> làm mất rõ ràng, tránh dùng <code>shared_ptr</code> quá mức gây leak.
+    </div>
+  </section>
+
+  <section>
+    <h3 id="14">2. C++14</h3>
+    <ul>
+      <li><strong>Generic lambdas:</strong> Lambda không cần chỉ rõ kiểu tham số.</li>
+      <li><strong>std::make_unique:</strong> Cách an toàn và ngắn gọn để tạo <code>unique_ptr</code>.</li>
+      <li><strong>Return type deduction:</strong> Hàm tự suy ra kiểu trả về với <code>auto</code>.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h3 id="17">3. C++17</h3>
+    <ul>
+      <li><strong>Structured bindings:</strong> Tách pair/tuple rõ ràng hơn.
+        <code>auto [a, b] = std::make_pair(1, 2);</code>
+      </li>
+      <li><strong>if constexpr:</strong> Điều kiện compile-time, tránh lỗi với template.</li>
+      <li><strong>std::optional:</strong> Tránh dùng nullptr hoặc boolean flag.</li>
+      <li><strong>std::variant:</strong> Union an toàn kiểu.</li>
+      <li><strong>Filesystem library:</strong> Làm việc với file system chuẩn C++.</li>
+      <li><strong>std::string_view:</strong> Truy cập chuỗi mà không copy.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h3 id="20">4. C++20</h3>
+    <ul>
+      <li><strong>Concepts:</strong> Ràng buộc kiểu rõ ràng trong template.</li>
+      <li><strong>Ranges library:</strong> Viết pipeline hàm như functional programming.</li>
+      <li><strong>Coroutines:</strong> <code>co_await</code>, <code>co_yield</code> viết async như sync.</li>
+      <li><strong>Calendar & timezone:</strong> Hỗ trợ thời gian chuẩn, tích hợp với chrono.</li>
+      <li><strong>Modules:</strong> Hệ thống module thay thế header, cải thiện tốc độ build.</li>
+    </ul>
+  </section>
+
+    <p><a href="cpp-advance.html">← Quay lại C++ Nâng Cao</a></p>
+  </main>
+</body>
+
+</html>

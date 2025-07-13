@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>C++ Nâng Cao</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+      color: #333;
+
+    }
+
+    header {
+      background: #005b99;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav {
+      background: #003f66;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      padding: 20px;
+      max-width: 960px;
+      margin: auto;
+      background: white;
+    }
+
+    h3 {
+      color: #005b99;
+    }
+
+    pre {
+      background: #eee;
+      padding: 10px;
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: Consolas, monospace;
+    }
+
+    a {
+      color: #005b99;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .note {
+      font-style: italic;
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Học C++ từ Cơ Bản đến Nâng Cao</h1>
+    <p>Website tự học lập trình C++ miễn phí, thực chiến, dễ hiểu</p>
+  </header>
+
+  <nav>
+    <a href="cpp-bassic.html">C++ Cơ Bản</a>
+    <a href="cpp-advance.html">C++ Nâng Cao</a>
+    <a href="stl.html">STL</a>
+    <a href="#build">Build System</a>
+    <a href="#du-an">Dự Án</a>
+  </nav>
+
+  <main>
+    <h2>C++ Nâng Cao</h2>
+
+	<h3>1. Lập trình hướng đối tượng (OOP)</h3>
+	<ul>
+	  <li><a href="oop.html#oop">OOP: Kế thừa, đa hình, đóng gói, trừu tượng</a></li>
+	  <li><a href="oop.html#ruleof3">Rule of Three / Five / Zero & Constructor Enhancements</a></li>
+	  <li><a href="oop.html#inheritance">Inheritance & Multiple Inheritance: Diamond Problem</a></li>
+	  <li><a href="oop.html#static">Static Members & Friend Functions</a></li>
+	  <li><a href="oop.html#virtual">Virtual Destructor & Object Slicing</a></li>
+	  <li><a href="oop.html#patterns">Design Patterns (Singleton, Factory, Strategy, Observer)</a></li>
+	</ul>
+
+<h3>2. Quản lý bộ nhớ nâng cao</h3>
+<ul>
+  <li><a href="memoryAdvance.html#SmartPointer">Smart pointer: unique_ptr, shared_ptr, weak_ptr</a></li>
+  <li><a href="memoryAdvance.html#raii">RAII – Quản lý tài nguyên tự động</a></li>
+  <li><a href="memoryAdvance.html#LeakDetector">Leak detector: Valgrind, AddressSanitizer</a></li>
+</ul>
+
+<h3>3. Template nâng cao</h3>
+<ul>
+  <li><a href="template.html#functionTemplates">Function & Class template</a></li>
+  <li><a href="template.html#Specialization">Specialization, SFINAE</a></li>
+  <li><a href="template.html#TypeTraits">Type Traits, Concepts (C++20)</a></li>
+</ul>
+
+<h3>4. Lambda & Function Object</h3>
+<ul>
+  <li><a href="lambdaFunction.html#Lambda">Lambda Expression</a></li>
+  <li><a href="lambdaFunction.html#Object">Function Object (Functor)</a></li>
+  <li><a href="lambdaFunction.html#std-function">std::function</a></li>
+  <li><a href="lambdaFunction.html#std-bind">std::bind</a></li>
+</ul>
+
+<h3>5. Multithreading & Process</h3>
+<ul>
+  <li><a href="thread.html#thread">Cơ bản về Thread</a></li>
+  <li><a href="thread.html#dbh">Đồng bộ hóa: Mutex và Condition Variable</a></li>
+  <li><a href="thread.html#Future">Future, Promise, Async</a></li>
+  <li><a href="thread.html#luuy">Khi nào nên dùng thread?</a></li>
+  <li><a href="thread.html#hieunang">Lưu ý về hiệu năng và tài nguyên</a></li>
+  <li><a href="thread.html#vande">Những vấn đề thường gặp với thread</a></li>
+  <li><a href="thread.html#process">Làm việc với Process</a></li>
+  <li><a href="thread.html#sosanh">So sánh Thread và Process</a></li>
+</ul>
+
+<h3>6. STL nâng cao</h3>
+<ul>
+  <li><a href="stl.html#unordered-map-set">unordered_map / unordered_set</a></li>
+  <li><a href="stl.html#multiset-map-set">set / multiset / map / multimap</a></li>
+  <li><a href="stl.html#priority_queue">priority_queue / heap</a></li>
+  <li><a href="stl.html#stack">stack / queue / deque</a></li>
+  <li><a href="stl.html#vector">vector vs list</a></li>
+  <li><a href="stl.html#thuattoan">Thuật toán STL</a></li>
+  <li><a href="stl.html#Ranges">C++20 Ranges</a></li>
+  <li><a href="stl.html#CustomComparator">Custom Comparator</a></li>
+  <li><a href="stl.html#Iterator">Iterator nâng cao</a></li>
+</ul>
+
+<h3>7. Modern C++ Features</h3>
+<ul>
+  <li><a href="modern-cpp.html#11">C++ 11</a></li>
+  <li><a href="modern-cpp.html#14">C++ 14</a></li>
+  <li><a href="modern-cpp.html#17">C++ 17</a></li>
+  <li><a href="modern-cpp.html#20">C++ 20</a></li>
+</ul>
+
+<h3>8. Exception Handling</h3>
+<ul>
+  <li><a href="exception.html#1">try/catch nâng cao, noexcept</a></li>
+  <li><a href="exception.html#2">Custom exception class</a></li>
+</ul>
+
+<h3>9. Debug & Testing</h3>
+<ul>
+  <li>GDB, CMake, GoogleTest</li>
+  <li>Static Analysis Tools</li>
+</ul>
+	
+
+    <p class="note">Trang này là phần mở rộng của <a href="cpp-bassic.html">C++ Cơ Bản</a>.</p>
+    <p><a href="index.html">← Quay lại Trang chính</a></p>
+  </main>
+</body>
+
+</html>

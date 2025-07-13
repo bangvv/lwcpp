@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chi Tiết OOP trong C++</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+      color: #333;
+
+    }
+
+    header {
+      background: #005b99;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav {
+      background: #003f66;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      padding: 20px;
+      max-width: 960px;
+      margin: auto;
+      background: white;
+    }
+
+    h4 {
+      color: #005b99;
+    }
+
+    pre {
+      background: #eee;
+      padding: 10px;
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: Consolas, monospace;
+      background: #e0e0e0;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+
+    a {
+      color: #005b99;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .note {
+      font-style: italic;
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Học C++ từ Cơ Bản đến Nâng Cao</h1>
+    <p>Website tự học lập trình C++ miễn phí, thực chiến, dễ hiểu</p>
+  </header>
+
+  <nav>
+    <a href="cpp-bassic.html">C++ Cơ Bản</a>
+    <a href="cpp-advance.html">C++ Nâng Cao</a>
+    <a href="#stl">STL</a>
+    <a href="#build">Build System</a>
+    <a href="#du-an">Dự Án</a>
+  </nav>
+
+  <main>
+
+<section>
+    <h2>Exception Handling</h2>
+
+    <h3 id="1">1. try / catch nâng cao</h3>
+    <ul>
+      <li>Dùng <code>try { ... } catch (const std::exception& e) { ... }</code> để xử lý ngoại lệ chuẩn.</li>
+      <li>Ưu tiên bắt bằng tham chiếu để tránh slicing và giữ nguyên thông tin.</li>
+      <li>Dùng <code>catch (...) </code> để bắt mọi loại ngoại lệ nhưng nên hạn chế.</li>
+    </ul>
+
+    <h3>noexcept</h3>
+    <ul>
+      <li>Dùng <code>noexcept</code> để chỉ định hàm không ném ngoại lệ.</li>
+      <li>Giúp tối ưu hiệu suất và tránh các tình huống không mong muốn.</li>
+      <li><code>noexcept</code> cũng được dùng để kiểm tra exception safety trong template.</li>
+    </ul>
+
+    <h3 id="2">2. Custom Exception Class</h3>
+    <ul>
+      <li>Thừa kế từ <code>std::exception</code> và override <code>what()</code>.</li>
+      <li>Giúp mô tả lỗi chi tiết hơn trong ứng dụng cụ thể.</li>
+    </ul>
+    <pre><code>#include &lt;iostream&gt;
+#include &lt;exception&gt;
+#include &lt;string&gt;
+
+class MyException : public std::exception {
+  std::string msg;
+public:
+  MyException(const std::string& m) : msg(m) {}
+  const char* what() const noexcept override {
+    return msg.c_str();
+  }
+};
+
+int main() {
+  try {
+    throw MyException("Something went wrong");
+  } catch (const std::exception& e) {
+    std::cout << "Caught exception: " << e.what() << std::endl;
+  }
+  return 0;
+}</code></pre>
+
+    <div class="note">
+      ⚠️ Lưu ý:
+      <ul>
+        <li>Ngoại lệ nên dùng cho lỗi không thể xử lý thông thường, không dùng cho logic điều khiển bình thường.</li>
+        <li>Tránh bắt ngoại lệ bằng con trỏ hoặc giá trị.</li>
+        <li>Luôn cleanup tài nguyên (hoặc dùng RAII) khi ngoại lệ xảy ra.</li>
+      </ul>
+    </div>
+  </section>
+
+    <p><a href="cpp-advance.html">← Quay lại C++ Nâng Cao</a></p>
+  </main>
+</body>
+
+</html>

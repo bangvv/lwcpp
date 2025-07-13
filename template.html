@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chi Tiết OOP trong C++</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+      color: #333;
+
+    }
+
+    header {
+      background: #005b99;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav {
+      background: #003f66;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      padding: 20px;
+      max-width: 960px;
+      margin: auto;
+      background: white;
+    }
+
+    h4 {
+      color: #005b99;
+    }
+
+    pre {
+      background: #eee;
+      padding: 10px;
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: Consolas, monospace;
+      background: #e0e0e0;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+
+    a {
+      color: #005b99;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .note {
+      font-style: italic;
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Học C++ từ Cơ Bản đến Nâng Cao</h1>
+    <p>Website tự học lập trình C++ miễn phí, thực chiến, dễ hiểu</p>
+  </header>
+
+  <nav>
+    <a href="cpp-bassic.html">C++ Cơ Bản</a>
+    <a href="cpp-advance.html">C++ Nâng Cao</a>
+    <a href="#stl">STL</a>
+    <a href="#build">Build System</a>
+    <a href="#du-an">Dự Án</a>
+  </nav>
+
+  <main>
+
+    <section>
+      <h2>Template nâng cao</h2>
+      <h3 id="functionTemplates">1. Function & Class Templates</h3>
+      <p><strong>Function template</strong> cho phép viết hàm dùng cho nhiều kiểu dữ liệu:</p>
+      <pre><code>template<typename T>
+T max(T a, T b) {
+    return a > b ? a : b;
+}
+
+int x = max(3, 5);   // T = int
+float y = max(2.5f, 1.8f); // T = float</code></pre>
+
+      <p><strong>Class template</strong> giúp tổng quát hóa định nghĩa lớp:</p>
+      <pre><code>template<typename T>
+class Box {
+    T value;
+public:
+    Box(T v) : value(v) {}
+    T get() const { return value; }
+};
+
+Box<int> b1(10);
+Box<std::string> b2("hello");</code></pre>
+
+      <div class="note">
+        📌 Nên dùng khi bạn muốn logic hoạt động giống nhau cho nhiều kiểu dữ liệu.
+      </div>
+    </section>
+
+    <section>
+      <h3 id="Specialization">2. Specialization & SFINAE</h3>
+      <p><strong>Template Specialization</strong> giúp định nghĩa hành vi riêng biệt cho một kiểu cụ thể:</p>
+      <pre><code>template<typename T>
+class Printer {
+public:
+    void print(T val) { std::cout << val << "\n"; }
+};
+
+// Specialization for bool
+template<>
+class Printer<bool> {
+public:
+    void print(bool val) {
+        std::cout << (val ? "true" : "false") << "\n";
+    }
+};</code></pre>
+
+      <p><strong>SFINAE (Substitution Failure Is Not An Error)</strong>: cho phép loại bỏ các hàm không phù hợp với điều
+        kiện template tại compile-time:</p>
+      <pre><code>template<typename T>
+typename std::enable_if<std::is_integral<T>::value>::type
+print_type(T) {
+    std::cout << "Integral\n";
+}
+
+template<typename T>
+typename std::enable_if<std::is_floating_point<T>::value>::type
+print_type(T) {
+    std::cout << "Floating point\n";
+}</code></pre>
+
+      <div class="note">
+        ⚠️ SFINAE giúp bạn tùy biến hàm mà không cần tạo nhiều overloads tách biệt, cực kỳ hữu ích khi viết thư viện
+        chung.
+      </div>
+    </section>
+
+    <section>
+      <h3 id="TypeTraits">3. Type Traits & Concepts (C++20)</h3>
+      <p><strong>Type Traits</strong> là meta-programming utilities trong C++ để kiểm tra hoặc sửa đổi kiểu dữ liệu:</p>
+      <pre><code>#include <type_traits>
+std::is_integral<int>::value       // true
+std::is_floating_point<float>::value  // true
+    </code></pre>
+
+      <p><strong>Concepts (C++20)</strong>: Ràng buộc kiểu dữ liệu ở mức compile-time để tăng độ rõ ràng:</p>
+      <pre><code>template<typename T>
+concept Addable = requires(T a, T b) {
+    { a + b } -> std::convertible_to<T>;
+};
+
+template<Addable T>
+T add(T a, T b) {
+    return a + b;
+}</code></pre>
+
+      <div class="note">
+        ✅ Concepts thay thế cho SFINAE giúp code rõ ràng hơn, dễ đọc và dễ bảo trì.
+      </div>
+    </section>
+
+    <p><a href="cpp-advance.html">← Quay lại C++ Nâng Cao</a></p>
+  </main>
+</body>
+
+</html>

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chi Tiết OOP trong C++</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+      color: #333;
+
+    }
+
+    header {
+      background: #005b99;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav {
+      background: #003f66;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      padding: 20px;
+      max-width: 960px;
+      margin: auto;
+      background: white;
+    }
+
+    h4 {
+      color: #005b99;
+    }
+
+    pre {
+      background: #eee;
+      padding: 10px;
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: Consolas, monospace;
+      background: #e0e0e0;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+
+    a {
+      color: #005b99;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .note {
+      font-style: italic;
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Học C++ từ Cơ Bản đến Nâng Cao</h1>
+    <p>Website tự học lập trình C++ miễn phí, thực chiến, dễ hiểu</p>
+  </header>
+
+  <nav>
+    <a href="cpp-bassic.html">C++ Cơ Bản</a>
+    <a href="cpp-advance.html">C++ Nâng Cao</a>
+    <a href="#stl">STL</a>
+    <a href="#build">Build System</a>
+    <a href="#du-an">Dự Án</a>
+  </nav>
+
+  <main>
+    <section id="oop">
+      <h2>1. OOP: Kế thừa, đa hình, đóng gói, trừu tượng</h2>
+      <ul>
+        <li><strong>Kế thừa (Inheritance)</strong>: Cho phép class con sử dụng lại thuộc tính và phương thức của class
+          cha.</li>
+        <li><strong>Đa hình (Polymorphism)</strong>: Cho phép gọi đúng hàm override dựa trên kiểu runtime thông qua con
+          trỏ hoặc tham chiếu.</li>
+        <li><strong>Đóng gói (Encapsulation)</strong>: Gom toàn bộ thuộc tính và hành vi liên quan vào trong 1 class, và
+          che giấu các chi tiết không cần thiết bằng cách dùng access modifier (private/protected/public).</li>
+        <li><strong>Trừu tượng (Abstraction)</strong>: Tách phần giao diện ra khỏi phần hiện thực, giúp ẩn các chi tiết
+          phức tạp, chỉ hiển thị những gì cần thiết để sử dụng.</li>
+      </ul>
+      <pre><code>class Animal {
+public:
+    virtual void speak() = 0; // Pure virtual function: interface abstraction
+};
+
+class Dog : public Animal {
+public:
+    void speak() override { std::cout << "Woof"; }
+};
+    </code></pre>
+      <div class="note">
+        🔸 Lưu ý: Truyền object dẫn xuất qua giá trị sẽ gây ra hiện tượng <strong>object slicing</strong>. Nên dùng con
+        trỏ hoặc tham chiếu nếu cần đa hình.
+      </div>
+    </section>
+
+    <section id="ruleof3">
+      <h2>2. Rule of Three / Five / Zero & Constructor Enhancements</h2>
+      <p><strong>Rule of Three:</strong> Nếu bạn viết constructor sao chép (copy constructor), bạn nên viết thêm
+        destructor và toán tử gán (copy assignment operator).</p>
+      <p><strong>Rule of Five:</strong> Bổ sung thêm move constructor và move assignment operator với C++11.</p>
+      <p><strong>Rule of Zero:</strong> Sử dụng smart pointer hoặc container để không cần viết bất kỳ hàm quản lý tài
+        nguyên nào.</p>
+      <pre><code>class Resource {
+          int* data;
+      public:
+          Resource(int v) : data(new int(v)) {}
+          ~Resource() { delete data; }
+          Resource(const Resource& r) : data(new int(*r.data)) {}
+          Resource& operator=(const Resource& r) {
+              if (this != &r) {
+                  delete data;
+                  data = new int(*r.data);
+              }
+              return *this;
+          }
+      };
+      </code></pre>
+
+      <h4>Constructor Delegation</h4>
+      <p>Dùng một constructor gọi sang constructor khác để giảm lặp code.</p>
+      <pre><code>class MyClass {
+    int x, y;
+public:
+    MyClass(int val) : MyClass(val, 0) {} // gọi constructor 2 tham số
+    MyClass(int a, int b) : x(a), y(b) {}
+};
+    </code></pre>
+      <div class="note">
+        ⚠️ <strong>Lưu ý:</strong> Tránh tạo vòng lặp vô hạn bằng cách gọi constructor chính nó hoặc lặp chuỗi
+        constructor
+        không kết thúc.
+      </div>
+
+      <h4>=default và =delete</h4>
+      <ul>
+        <li>
+          <pre><code>=default</code></pre>: Yêu cầu compiler tự sinh hàm constructor hoặc operator mặc định.
+        </li>
+        <li>
+          <pre><code>=delete</code></pre>: Cấm compiler tự sinh hoặc gọi một hàm.
+        </li>
+      </ul>
+      <pre><code>class Example {
+public:
+    Example() = default; // constructor mặc định
+    Example(const Example&) = delete; // không cho phép copy
+    Example& operator=(const Example&) = delete; // không gán được
+    ~Example() = default; // hủy mặc định
+};
+    </code></pre>
+      <div class="note">
+        ✅ <strong>Lưu ý:</strong> Sử dụng
+        <pre><code>=delete</code></pre> giúp ngăn lỗi lập trình khi cố gắng copy object không nên
+        copy. Sử dụng
+        <pre><code>=default</code></pre> giúp đơn giản code, nhưng cũng nên rõ ràng về ý định thiết kế.
+      </div>
+    </section>
+
+    <section id="inheritance">
+      <h2>3. Inheritance & Multiple Inheritance: Diamond Problem</h2>
+      <p>Khi một class kế thừa từ nhiều class, có thể gây ra xung đột, đặc biệt khi cùng kế thừa từ một base class — gọi
+        là Diamond Problem.</p>
+      <pre><code>class A { public: void hello() {} };
+class B : public virtual A {};
+class C : public virtual A {};
+class D : public B, public C {};
+D d; d.hello();
+    </code></pre>
+      <div class="note">
+        🔸 <strong>Lưu ý:</strong> Dùng từ khóa
+        <pre><code>virtual</code></pre> khi kế thừa để đảm bảo chỉ tồn tại một instance của A trong D.
+      </div>
+      <h4>Đa hình tĩnh vs động</h4>
+      <ul>
+        <li><strong>Đa hình tĩnh (Compile-time)</strong>: Xảy ra khi nạp chồng hàm (function overloading) hoặc nạp chồng
+          toán tử (operator overloading). Quyết định tại thời điểm biên dịch.</li>
+        <li><strong>Đa hình động (Runtime)</strong>: Xảy ra khi sử dụng con trỏ hoặc tham chiếu đến lớp cơ sở và
+          override virtual function ở lớp con. Quyết định tại runtime thông qua cơ chế vtable.</li>
+      </ul>
+      <pre><code>// Compile-time polymorphism
+int add(int a, int b);      // overloading
+float add(float a, float b);
+
+// Runtime polymorphism
+class Base { public: virtual void show() { std::cout << "Base"; } };
+class Derived : public Base { public: void show() override { std::cout << "Derived"; } };
+Base* b = new Derived();
+b->show();  // prints "Derived"
+    </code></pre>
+      <div class="note">
+        🔸 Đa hình tĩnh cho hiệu suất cao hơn nhưng kém linh hoạt hơn. Đa hình động linh hoạt nhưng có chi phí hiệu năng
+        và cần quản lý đúng để tránh lỗi runtime.
+      </div>
+    </section>
+
+    <section id="static">
+      <h2>4. Static Members & Friend Functions</h2>
+      <p><strong>Static member</strong>: Dùng chung cho mọi object, không phụ thuộc instance cụ thể. <br> <strong>Lưu
+          ý:</strong> Chỉ có các
+      <pre><code>static function</code></pre> mới có thể truy cập trực tiếp
+      <pre><code>static member</code></pre>.</p>
+      <pre><code>class Counter {
+    static int count; // chỉ có một biến duy nhất trong bộ nhớ
+public:
+    Counter() { ++count; }
+    static int getCount() { return count; } // chỉ static function gọi được static member
+};
+int Counter::count = 0;
+    </code></pre>
+      <ul>
+        <li>Static function không thể truy cập non-static member vì nó không có đối tượng cụ thể (this pointer).</li>
+        <li>Thường dùng để đếm số lượng instance hoặc chia sẻ trạng thái toàn cục giữa các object.</li>
+      </ul>
+      <p><strong>Friend function / friend class</strong>: Cho phép truy cập vào thành phần private/protected của class
+        mà không cần kế thừa.</p>
+      <pre><code>class Box {
+private:
+    int value;
+    friend void showValue(const Box&);
+};
+void showValue(const Box& b) {
+    std::cout << b.value;
+}
+    </code></pre>
+      <div class="note">
+        ⚠️ Lưu ý: <strong>Friend</strong> phá vỡ tính đóng gói, chỉ nên dùng trong các trường hợp đặc biệt như overload
+        operator, unit test, hoặc tối ưu performance khi interface public không đủ linh hoạt.
+      </div>
+    </section>
+
+    <section id="virtual">
+      <h2>5. Virtual Destructor & Object Slicing</h2>
+      <p><strong>Virtual destructor</strong>: Đảm bảo gọi đúng destructor khi xóa object qua con trỏ base class.</p>
+      <pre><code>class Base {
+public:
+    virtual ~Base() { std::cout << "Base destructor\n"; }
+};
+class Derived : public Base {
+public:
+    ~Derived() { std::cout << "Derived destructor\n"; }
+};
+Base* obj = new Derived();
+delete obj; // gọi đúng cả 2 destructor
+    </code></pre>
+      <p><strong>Object Slicing:</strong> Khi truyền object bằng giá trị, phần dữ liệu riêng của class con sẽ bị cắt bỏ.
+      </p>
+      <pre><code>class A { 
+  public: int x; 
+};
+class B : public A {
+   public: int y; 
+};
+A a = B(); // slicing: y bị bỏ
+    </code></pre>
+    </section>
+
+    <section id="patterns">
+      <h2>6. Design Patterns (Singleton, Factory, Strategy, Observer)</h2>
+
+      <h4>Singleton</h4>
+      <p>Đảm bảo chỉ có một instance toàn cục duy nhất và truy cập thống nhất.</p>
+      <pre><code>class Singleton {
+public:
+    static Singleton& getInstance() {
+        static Singleton instance; // thread-safe từ C++11
+        return instance;
+    }
+    Singleton(const Singleton&) = delete;
+    Singleton& operator=(const Singleton&) = delete;
+private:
+    Singleton() = default;
+};
+    </code></pre>
+      <div class="note">
+        ✅ Ưu điểm: Đảm bảo chỉ có 1 instance, dùng chung toàn hệ thống.<br>
+        ❌ Nhược điểm: Khó test unit, dễ gây phụ thuộc toàn cục (global dependency).
+      </div>
+
+      <h4>Factory</h4>
+      <p>Ẩn logic khởi tạo object, tạo object thông qua interface thay vì new trực tiếp.</p>
+      <pre><code>class Product {
+public:
+    virtual void use() = 0;
+    virtual ~Product() = default;
+};
+
+class ConcreteProduct : public Product {
+public:
+    void use() override { std::cout << "Used ConcreteProduct"; }
+};
+
+class Factory {
+public:
+    static Product* createProduct() { return new ConcreteProduct(); }
+};
+    </code></pre>
+      <div class="note">
+        ✅ Ưu điểm: Dễ mở rộng, giảm phụ thuộc cụ thể.<br>
+        ❌ Nhược điểm: Tăng số lượng class, khó debug nếu không có logging rõ ràng.
+      </div>
+
+      <h4>Strategy</h4>
+      <p>Cho phép thay đổi thuật toán runtime thông qua interface.</p>
+      <pre><code>class SortStrategy {
+public:
+    virtual void sort() = 0;
+    virtual ~SortStrategy() = default;
+};
+
+class QuickSort : public SortStrategy {
+public:
+    void sort() override { std::cout << "QuickSort applied"; }
+};
+
+class SortContext {
+private:
+    SortStrategy* strategy;
+public:
+    void setStrategy(SortStrategy* s) { strategy = s; }
+    void execute() { strategy->sort(); }
+};
+    </code></pre>
+      <div class="note">
+        ✅ Ưu điểm: Linh hoạt thay đổi thuật toán.<br>
+        ❌ Nhược điểm: Phải quản lý thêm các class strategy.
+      </div>
+
+      <h4>Observer</h4>
+      <p>Thông báo cho nhiều đối tượng khi có thay đổi trạng thái.</p>
+      <pre><code>class Observer {
+public:
+    virtual void update(int value) = 0;
+};
+
+class Subject {
+    std::vector<Observer*> observers;
+    int state = 0;
+public:
+    void attach(Observer* obs) { observers.push_back(obs); }
+    void setState(int v) {
+        state = v;
+        for (auto obs : observers) obs->update(state);
+    }
+};
+    </code></pre>
+      <div class="note">
+        ✅ Ưu điểm: Tách biệt đối tượng phát sinh thay đổi và người theo dõi.<br>
+        ❌ Nhược điểm: Khó debug lỗi thứ tự hoặc vòng lặp cập nhật.
+      </div>
+    </section>
+
+    <p><a href="cpp-advance.html">← Quay lại C++ Nâng Cao</a></p>
+  </main>
+</body>
+
+</html>

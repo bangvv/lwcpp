@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chi Tiết OOP trong C++</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+      color: #333;
+
+    }
+
+    header {
+      background: #005b99;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav {
+      background: #003f66;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      padding: 20px;
+      max-width: 960px;
+      margin: auto;
+      background: white;
+    }
+
+    h4 {
+      color: #005b99;
+    }
+
+    pre {
+      background: #eee;
+      padding: 10px;
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: Consolas, monospace;
+      background: #e0e0e0;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+
+    a {
+      color: #005b99;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .note {
+      font-style: italic;
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Học C++ từ Cơ Bản đến Nâng Cao</h1>
+    <p>Website tự học lập trình C++ miễn phí, thực chiến, dễ hiểu</p>
+  </header>
+
+  <nav>
+    <a href="cpp-bassic.html">C++ Cơ Bản</a>
+    <a href="cpp-advance.html">C++ Nâng Cao</a>
+    <a href="#stl">STL</a>
+    <a href="#build">Build System</a>
+    <a href="#du-an">Dự Án</a>
+  </nav>
+
+  <main>
+
+  <section>
+    <h2>C++ Multithreading & Process</h2>
+    <h3 id="thread">1. Cơ bản về Thread</h3>
+    <p><code>std::thread</code> dùng để tạo và chạy luồng.</p>
+    <pre><code>void task() { std::cout << "Hello from thread!\n"; }
+std::thread t(task);
+t.join(); // hoặc t.detach();
+    </code></pre>
+    
+    <div class="note">
+      🔸 Nên gọi <code>join()</code> hoặc <code>detach()</code> để tránh terminate chương trình.
+    </div>
+  </section>
+
+  <section>
+    <h3 id="dbh">2. Đồng bộ hóa: Mutex và Condition Variable</h3>
+    <pre><code>std::mutex m;
+int shared = 0;
+void inc() {
+  std::lock_guard<std::mutex> lock(m);
+  ++shared;
+}
+    </code></pre>
+    <pre><code>std::condition_variable cv;
+bool ready = false;
+void worker() {
+  std::unique_lock<std::mutex> lock(m);
+  cv.wait(lock, [] { return ready; });
+  // do work
+}
+    </code></pre>
+    
+  </section>
+
+  <section>
+    <h3 id="Future">3. Future, Promise, Async</h3>
+    <p><code>std::promise</code> gửi dữ liệu từ thread A sang B, dùng kèm <code>std::future</code>.</p>
+    <pre><code>std::promise<int> p;
+std::future<int> f = p.get_future();
+std::thread([&p]{ p.set_value(42); }).detach();
+int result = f.get();
+    </code></pre>
+    
+    <p><code>std::async</code> tạo thread và tự động quản lý future.</p>
+    <pre><code>std::future<int> f = std::async([]{ return 5 + 3; });
+int result = f.get();
+    </code></pre>
+    
+  </section>
+
+  <section>
+    <h3 id="luuy">4. Khi nào nên dùng thread?</h3>
+    <ul>
+      <li>Thực thi tác vụ tốn thời gian (I/O, xử lý ảnh, tính toán lớn).</li>
+      <li>Song song hoá các phần độc lập trong ứng dụng.</li>
+      <li>Giữ UI responsive (trong GUI hoặc game).</li>
+    </ul>
+  </section>
+
+  <section>
+    <h3 id="hieunang">5. Lưu ý về hiệu năng và tài nguyên</h3>
+    <ul>
+      <li>Không tạo quá nhiều thread: giới hạn bởi số core và tài nguyên OS.</li>
+      <li>Dùng thread pool (ví dụ <code>std::async</code> hoặc lib thread pool).</li>
+      <li>Tránh deadlock bằng cách luôn lock theo thứ tự xác định.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h3 id="vande">6. Những vấn đề thường gặp với thread</h3>
+    <ul>
+      <li><strong>Không gọi join/detach</strong>: thread bị "std::terminate" khi hủy.</li>
+      <li><strong>Data race</strong>: hai thread truy cập chung 1 biến không được bảo vệ mutex.</li>
+      <li><strong>Deadlock</strong>: hai thread lock chéo lẫn nhau và không thoát được.</li>
+      <li><strong>Lỗi truy cập vùng nhớ sau khi thread kết thúc</strong> (dangling reference).</li>
+      <li><strong>Thread leak</strong>: tạo thread liên tục mà không quản lý.</li>
+      <li><strong>Không xử lý exception trong thread</strong>: thread chết âm thầm.</li>
+    </ul>
+    <div class="note">
+      📌 <strong>Cách xử lý và phòng tránh:</strong>
+      <ul>
+        <li>Dùng <code>std::lock_guard</code> hoặc <code>std::unique_lock</code> để đảm bảo mutex luôn được unlock an toàn.</li>
+        <li>Luôn gọi <code>join()</code> hoặc <code>detach()</code> với mỗi thread được tạo.</li>
+        <li>Sử dụng <code>try-catch</code> trong thread để bắt exception và xử lý.</li>
+        <li>Dùng <code>std::atomic</code> nếu chỉ cần thay đổi đơn giản mà không cần mutex.</li>
+        <li>Tránh lock nhiều mutex cùng lúc, hoặc lock theo thứ tự cố định.</li>
+      </ul>
+    </div>
+  </section>
+<section>
+    <h3 id="process">7. Làm việc với Process</h3>
+    <ul>
+      <li><strong>Process</strong> là một chương trình đang được thực thi, có bộ nhớ, PID, và tài nguyên riêng biệt.</li>
+      <li>Giao tiếp giữa các process (IPC) thường dùng: <code>pipe</code>, <code>shared memory</code>, <code>message queue</code>, <code>socket</code>.</li>
+      <li>Dùng <code>fork()</code> để tạo process con trên Linux.</li>
+      <li>Dùng <code>exec()</code> để thay thế image của process hiện tại bằng chương trình khác.</li>
+    </ul>
+    <pre><code>pid_t pid = fork();
+if (pid == 0) {
+  // process con
+  execlp("ls", "ls", "-l", nullptr);
+} else {
+  wait(NULL);
+}
+    </code></pre>
+    
+    <div class="note">
+      🔹 <strong>Lưu ý:</strong> Mỗi process có vùng nhớ tách biệt, cần IPC để trao đổi dữ liệu. Dùng signal hoặc socket cho thông báo bất đồng bộ.
+    </div>
+  </section>
+
+  <section>
+    <h3 id="sosanh">8. So sánh Thread và Process</h3>
+    <table border="1" cellpadding="6" cellspacing="0">
+      <tr><th>Tiêu chí</th><th>Thread</th><th>Process</th></tr>
+      <tr><td>Định nghĩa</td><td>Đơn vị nhỏ nhất trong thực thi</td><td>Chương trình đang chạy</td></tr>
+      <tr><td>Không gian nhớ</td><td>Chia sẻ bộ nhớ với thread khác</td><td>Không gian nhớ tách biệt</td></tr>
+      <tr><td>Tài nguyên</td><td>Chia sẻ file, heap</td><td>Tài nguyên riêng biệt</td></tr>
+      <tr><td>Tốc độ tạo</td><td>Nhanh</td><td>Chậm hơn</td></tr>
+      <tr><td>Giao tiếp</td><td>Dễ (qua biến dùng chung)</td><td>Cần IPC (pipe, shm, socket...)</td></tr>
+      <tr><td>Tác động lỗi</td><td>Có thể ảnh hưởng toàn bộ process</td><td>Chỉ ảnh hưởng process đó</td></tr>
+      <tr><td>Ví dụ dùng</td><td>Song song hoá xử lý UI, logic</td><td>Chạy chương trình độc lập</td></tr>
+    </table>
+    <div class="note">
+      ✅ <strong>Khi nào dùng thread?</strong>
+      <ul>
+        <li>Khi muốn song song hóa nội bộ ứng dụng.</li>
+        <li>Khi cần chia sẻ bộ nhớ, xử lý nhanh và nhẹ.</li>
+      </ul>
+      ✅ <strong>Khi nào dùng process?</strong>
+      <ul>
+        <li>Khi cần cách ly độc lập giữa các phần.</li>
+        <li>Khi xử lý các tác vụ lớn, cần độ ổn định cao hoặc crash-safe.</li>
+      </ul>
+    </div>
+  </section>
+
+
+
+    <p><a href="cpp-advance.html">← Quay lại C++ Nâng Cao</a></p>
+  </main>
+</body>
+
+</html>

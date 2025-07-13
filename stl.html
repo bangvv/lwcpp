@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chi Tiết OOP trong C++</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+      color: #333;
+
+    }
+
+    header {
+      background: #005b99;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav {
+      background: #003f66;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      padding: 20px;
+      max-width: 960px;
+      margin: auto;
+      background: white;
+    }
+
+    h4 {
+      color: #005b99;
+    }
+
+    pre {
+      background: #eee;
+      padding: 10px;
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: Consolas, monospace;
+      background: #e0e0e0;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+
+    a {
+      color: #005b99;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .note {
+      font-style: italic;
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Học C++ từ Cơ Bản đến Nâng Cao</h1>
+    <p>Website tự học lập trình C++ miễn phí, thực chiến, dễ hiểu</p>
+  </header>
+
+  <nav>
+    <a href="cpp-bassic.html">C++ Cơ Bản</a>
+    <a href="cpp-advance.html">C++ Nâng Cao</a>
+    <a href="#stl">STL</a>
+    <a href="#build">Build System</a>
+    <a href="#du-an">Dự Án</a>
+  </nav>
+
+  <main>
+
+
+  <section>
+    <h2>STL Nâng Cao</h2>
+
+    <h3 id="unordered-map-set">1. unordered_map / unordered_set</h3>
+    <ul>
+      <li>Ưu điểm: Tìm kiếm trung bình O(1), nhanh hơn map khi không cần thứ tự.</li>
+      <li>Nhược điểm: Không duy trì thứ tự, tiêu tốn bộ nhớ hơn <code>map/set</code>.</li>
+      <li>Nên dùng: Khi cần tra cứu nhanh, không quan tâm đến thứ tự.</li>
+    </ul>
+
+    <h3 id="multiset-map-set">2. set / multiset / map / multimap</h3>
+    <ul>
+      <li><strong>set/map:</strong> Không chứa phần tử trùng lặp.</li>
+      <li><strong>multiset/multimap:</strong> Cho phép nhiều phần tử trùng.</li>
+      <li>Giữ thứ tự phần tử (dựa trên comparator).</li>
+      <li>Nên dùng khi cần duy trì thứ tự hoặc tránh phần tử trùng.</li>
+    </ul>
+
+    <h3 id="priority_queue">3. priority_queue / heap</h3>
+    <ul>
+      <li>Là max-heap mặc định (ưu tiên giá trị lớn nhất).</li>
+      <li>Có thể dùng comparator để biến thành min-heap hoặc custom logic.</li>
+      <li>Dùng cho: Dijkstra, A*, top-k,...</li>
+      <li>Không duyệt được toàn bộ phần tử, chỉ truy cập phần tử đầu.</li>
+    </ul>
+
+    <h3 id="stack">4. stack / queue / deque</h3>
+    <ul>
+      <li><code>stack:</code> LIFO (Last In First Out)</li>
+      <li><code>queue:</code> FIFO (First In First Out)</li>
+      <li><code>deque:</code> Double-ended queue – chèn/xoá ở cả hai đầu.</li>
+      <li>Deque thay <code>vector/list</code> khi cần chèn ở đầu hoặc cuối hiệu quả.</li>
+    </ul>
+
+    <h3 id="vector">5. vector vs list</h3>
+    <ul>
+      <li><strong>vector:</strong> Truy cập nhanh, bộ nhớ liên tục, chèn xoá cuối hiệu quả.</li>
+      <li><strong>list:</strong> Tốt cho chèn/xoá giữa, nhưng chậm và tốn bộ nhớ.</li>
+      <li>Nên dùng <code>vector</code> mặc định, chỉ dùng <code>list</code> khi thực sự cần.</li>
+    </ul>
+
+    <h3 id="thuattoan">6. Thuật toán STL</h3>
+    <ul>
+      <li><code>std::transform:</code> Biến đổi từng phần tử (ví dụ: x2, lowercase...)</li>
+      <li><code>std::for_each:</code> Duyệt và xử lý phần tử (in ra màn hình,...)</li>
+      <li><code>std::accumulate:</code> Tính tổng, nối chuỗi,...</li>
+    </ul>
+
+    <h3 id="Ranges">7. C++20 Ranges</h3>
+    <ul>
+      <li>Dễ viết pipeline với <code>views::filter</code>, <code>views::transform</code>, <code>views::take_while</code>.</li>
+      <li>An toàn hơn so với iterator thủ công, rõ ràng và ngắn gọn.</li>
+    </ul>
+
+    <h3 id="CustomComparator">8. Custom Comparator</h3>
+    <ul>
+      <li>Dùng <code>struct</code> hoặc <code>lambda</code> để định nghĩa tiêu chí sắp xếp riêng.</li>
+      <li>Ứng dụng trong <code>sort</code>, <code>set/map</code>, <code>priority_queue</code>.</li>
+    </ul>
+
+    <h3 id="Iterator">9. Iterator nâng cao</h3>
+    <ul>
+      <li><strong>reverse_iterator:</strong> Duyệt ngược.</li>
+      <li><strong>insert_iterator:</strong> Chèn phần tử qua thuật toán (vd: copy).</li>
+      <li><strong>istream_iterator / ostream_iterator:</strong> Duyệt dữ liệu từ/ra stream.</li>
+    </ul>
+
+    <h3>Lưu ý hiệu suất & bộ nhớ</h3>
+    <ul>
+      <li>So sánh độ phức tạp Big-O khi chọn container.</li>
+      <li>Dùng <code>emplace</code> thay vì <code>insert</code> để tránh copy.</li>
+      <li>Không nên copy container lớn không cần thiết.</li>
+    </ul>
+
+    <pre><code>#include <unordered_map>
+#include <set>
+#include <queue>
+#include <algorithm>
+#include <ranges>
+
+std::unordered_map<int, std::string> dict = {{1, "A"}, {2, "B"}};
+std::set<int> s = {3, 1, 4};
+std::priority_queue<int> pq;
+pq.push(5); pq.push(2);
+
+std::vector<int> v = {1, 3, 2};
+std::sort(v.begin(), v.end());
+std::transform(v.begin(), v.end(), v.begin(), [](int x){ return x * 2; });
+
+// C++20 Ranges
+for (int x : v | std::ranges::views::filter([](int i){ return i > 2; })) {
+  std::cout << x << " ";
+}
+    </code></pre>
+  </section>
+
+
+    <p><a href="cpp-advance.html">← Quay lại C++ Nâng Cao</a></p>
+  </main>
+</body>
+
+</html>
