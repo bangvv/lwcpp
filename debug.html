@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Học lập trình C++ từ cơ bản đến nâng cao, bao gồm multithreading, STL, exception handling, modern C++, GoogleTest, CMake, debug, testing và nhiều hơn nữa.">
+  <meta name="keywords" content="C++, học C++, lập trình C++, C++ hiện đại, multithreading C++, STL, smart pointer, CMake, GDB, GoogleTest, exception handling C++, modern cpp, gtest, concurrency, debug C++, test C++">
+  <meta name="author" content="cppweb">
+  <title>Chi Tiết STL trong C++</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+      color: #333;
+
+    }
+
+    header {
+      background: #005b99;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav {
+      background: #003f66;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      padding: 20px;
+      max-width: 960px;
+      margin: auto;
+      background: white;
+    }
+
+    h4 {
+      color: #005b99;
+    }
+
+    pre {
+      background: #eee;
+      padding: 10px;
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: Consolas, monospace;
+      background: #e0e0e0;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+
+    a {
+      color: #005b99;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .note {
+      font-style: italic;
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Học C++ từ Cơ Bản đến Nâng Cao</h1>
+    <p>Website tự học lập trình C++ miễn phí, thực chiến, dễ hiểu</p>
+  </header>
+
+  <nav>
+    <a href="cpp-bassic.html">C++ Cơ Bản</a>
+    <a href="cpp-advance.html">C++ Nâng Cao</a>
+    <a href="#stl">STL</a>
+    <a href="#build">Build System</a>
+    <a href="#du-an">Dự Án</a>
+  </nav>
+
+  <main>
+
+
+  <section>
+    <h2>Debug & Testing</h2>
+
+    <h3 id="GDB">GDB (GNU Debugger)</h3>
+    <ul>
+      <li>Cài đặt: <code>sudo apt install gdb</code></li>
+      <li>Compile với debug symbol: <code>g++ -g main.cpp -o app</code></li>
+      <li>Chạy: <code>gdb ./app</code></li>
+      <li>Lệnh phổ biến: <code>break main</code>, <code>run</code>, <code>next</code>, <code>print var</code>, <code>bt</code> (backtrace)</li>
+    </ul>
+
+    <h3>CMake</h3>
+    <ul>
+      <li>Tạo file <code>CMakeLists.txt</code> đơn giản:</li>
+    </ul>
+    <pre><code>cmake_minimum_required(VERSION 3.10)
+project(MyApp)
+add_executable(main main.cpp)
+    </code></pre>
+    <ul>
+      <li>Build: <code>mkdir build &amp;&amp; cd build</code> → <code>cmake ..</code> → <code>make</code></li>
+    </ul>
+
+    <h3>GoogleTest</h3>
+    <ul>
+      <li>Clone từ GitHub: <code>git clone https://github.com/google/googletest.git</code></li>
+      <li>Dùng CMake để build &amp; link:</li>
+    </ul>
+    <pre><code># CMakeLists.txt
+cmake_minimum_required(VERSION 3.10)
+project(MyTest)
+add_subdirectory(googletest)
+include_directories(googletest/include)
+
+add_executable(runTest test.cpp)
+target_link_libraries(runTest gtest gtest_main)</code></pre>
+    <ul>
+      <li>Test đơn giản:</li>
+    </ul>
+    <pre><code>#include &lt;gtest/gtest.h&gt;
+
+TEST(SampleTest, BasicAssertion) {
+  EXPECT_EQ(1 + 1, 2);
+}
+
+int main(int argc, char **argv) {
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}
+    </code></pre>
+
+    <h3 id="StaticAnalysisTools">Static Analysis Tools</h3>
+    <ul>
+      <li><code>clang-tidy</code>: Kiểm tra code style và bug tiềm ẩn.</li>
+      <li><code>cppcheck</code>: Phân tích mã nguồn C++ để phát hiện lỗi.</li>
+      <li><code>valgrind</code>: Phát hiện memory leak và các truy cập bộ nhớ sai.</li>
+    </ul>
+  </section>
+
+
+    <p><a href="cpp-advance.html">← Quay lại C++ Nâng Cao</a></p>
+  </main>
+</body>
+
+</html>
